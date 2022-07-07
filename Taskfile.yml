@@ -1,0 +1,27 @@
+version: "3"
+
+tasks:
+  build:
+    desc: Build the app
+    cmds:
+    - GOFLAGS=-mod=mod go build -o bin/gorestapi internal/main.go 
+
+  run: 
+      desc: Run the app
+      cmds:
+      - GOFLAGS=-mod=mod go run internal/main.go
+
+  swagger.gen:
+      desc: Generate Go code (Disabled)
+      cmds:
+      - GOFLAGS=-mod=mod go generate gorestapi/internal gorestapi/pkg/swagger
+
+  swagger.validate:
+      desc: Validate swagger
+      cmds:
+      - swagger validate pkg/swagger/swagger.yml
+
+  swagger.doc:
+      desc: Doc for swagger (Disabled)
+      cmds:
+      # - docker run -i yousan/swagger-yaml-to-html < pkg/swagger/swagger.yml > doc/index.html
